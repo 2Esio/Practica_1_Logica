@@ -1,7 +1,7 @@
 {-Practica 1 introduccion a haskell
 Integrantes
 Angel Mauricio Lopez Miranda
-Daniel
+Andres Daniel Lopez Molina
 Etni Sarahi Castro Siera 
 Marco Flores Cid
 -}
@@ -74,8 +74,5 @@ entre la casa del haskellium y la plaza, la distancia maxima a recorrer en bici 
 mientras que la moto se mueve a 70 -}
 
 timeToWork :: Haskellium -> Float
-timeToWork haskellium =
-    let dist = from0 (location haskellium)
-    in if dist <= 300
-       then dist / 30   
-       else dist / 70
+timeToWork haskellium = if(distancia) <= 300 then distancia/30 else distancia/70
+    where distancia = from0 (location haskellium)
