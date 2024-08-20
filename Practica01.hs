@@ -34,9 +34,27 @@ distance (x_1, y_1) (x_2, y_2)= sqrt((x_2 - x_1)**2 +(y_2 - y_1)**2)
 from0 :: Point -> Float 
 from0 (x, y) = distance (0,0) (x,y) 
 
+-- 1.3 Isla Funcional
+
+-- 2. Listas y Funciones
+
+-- 2.1 Palindromo
+
+isPal :: String -> Bool
+isPal [] = True
+isPal [_] = True
+isPal (x:xs) 
+    | x == last xs = isPal (init (tail xs))
+    | otherwise = False
+
+-- 2.2 Concatenar
+
+concat' :: [[a]] -> [a]
+concat' [] = []
+concat' (x:xs) = x ++ concat' xs
 
 
-{- Ejercicio 4.4: 
+{- Ejercicio 2.4: 
 Implementar usando foldr la función reversaFr, la cuál dada una lista nos regresa la lista con
 los mismos elementos pero en orden opuesto.
 -}
