@@ -25,12 +25,4 @@ instance Ord Shape where
     compare s1 s2 = compare (area s1) (area s2)
 
 
--- 1.2 Point
-
-type Point = (Float, Float)
-
-distance :: Point -> Point -> Float
-distance (x_1, y_1) (x_2, y_2)= sqrt((x_2 - x_1)**2 +(y_2 - y_1)**2)
-
-from0 :: Point -> Float 
-from0 (x, y) = distance (0,0) (x,y) 
+    
