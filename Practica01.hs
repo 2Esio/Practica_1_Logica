@@ -98,11 +98,24 @@ concat' :: [[a]] -> [a]
 concat' [] = []
 concat' (x:xs) = x ++ concat' xs
 
+-- 2.3 Pascal
 
-{- Ejercicio 2.4: 
-Implementar usando foldr la función reversaFr, la cuál dada una lista nos regresa la lista con
-los mismos elementos pero en orden opuesto.
--}
+-- Calcular el factorial de un número nos servirá para ocuparlo en nCk
+factorial :: Int -> Int 
+factorial 0 = 1 
+factorial n = n * factorial (n - 1) 
+ 
+-- Función para calcular la combinación de n en k, esto para que sea más fácil implementar el triángulo de pascal
+combinacion :: Int -> Int -> Int 
+combinacion n k = factorial n `div` (factorial k * factorial (n - k)) --formula desglosada
+ 
+{- Función para obtener la n-ésima fila del triángulo de Pascal, 
+para la cual, usaremos listas por comprensión y se calculará 
+para cada k su numero combinatorio-}
+pascalN :: Int -> [Int] 
+pascalN n = [combinacion n k | k <- [0..n] ] 
+
+-- 2.4 Reversa
 
 {- Función aux que usaremos en reversaFr con foldr
 Recibe un elemento x y una lista xs,
