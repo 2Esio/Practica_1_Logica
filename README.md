@@ -1,4 +1,8 @@
-# Practica_1_Logica
+# Practica_1_Logica - Introduccion a haskell
 
-- Lopez Molina Andres Daniel - 319117026
-- Castro Sierra Etni Sarai - 319031621
+Integrantes:
+
+Angel Mauricio Lopez Miranda
+Andres Daniel Lopez Molina
+Etni Sarahi Castro Siera 
+Marco Flores Cid

@@ -1,11 +1,7 @@
-{-Practica 1 introduccion a haskell
-Integrantes
-Angel Mauricio Lopez Miranda
-Andres Daniel Lopez Molina
-Etni Sarahi Castro Siera 
-Marco Flores Cid
--}
+
 module Logica where
+
+
 --Ejercicio 1
 data Shape = Circle Float --radio
              | Square Float --lado
@@ -17,12 +13,17 @@ area :: Shape -> Float
 area (Circle r) = pi * (r ** 2)
 area (Square l) = l * l
 area (Rectangle v h) = v * h
+
 --https://www.geogebra.org/m/K42Xma77 Formula de Herón
 area (Triangle a b c) =
     let s = (a + b + c) / 2
     in sqrt (s * (s - a) * (s - b) * (s - c))
+
 area (Trapeze bm m h l1 l2) = ((bm + m)/2) * h
+
+
 --Funcion para calcular el perimetro de las instancias de Shape
+
 perimeter :: Shape -> Float 
 perimeter (Circle r) = pi * (r * 2)
 perimeter (Square l) = l * 4
