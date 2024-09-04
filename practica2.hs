@@ -94,10 +94,7 @@ esValida = tautologia
 --
 
 esInsatisfacible :: Prop -> Bool
-esInsatisfacible formula =
-   let vars = variables formula  -- Extraemos las variables de la fórmula
-       estados = conjPotencia vars  -- Generamos todos los estados posibles
-   in all (\estado -> not (interpretacion formula estado)) estados  -- Verificamos si en todos los estados la fórmula es falsa
+esInsatisfacible f = null(estadosPosibles f) 
 
 -- E11 Definir una función que dada una fórmula proposicional, verifica si esta es satisfacible. 
 
