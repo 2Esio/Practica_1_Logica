@@ -47,7 +47,7 @@ variables (Syss p q) = eliminarRepetidos(variables p ++ variables q)
 
 conjPotencia :: [a] -> [[a]]
 conjPotencia [] = [[]]
-conjPotencia (x:xs) = conjPotencia xs ++ [(x:ys) | ys <- conjPotencia xs]
+conjPotencia (x:xs) = [(x:ys) | ys <- conjPotencia xs] ++ conjPotencia xs
 
 -- E3 Definir la función interpretacion :: Prop -> Estado -> Bool tal que interpretacion f i es la interpretacion de f bajo i.
 
@@ -87,7 +87,9 @@ contar (Syss p q) = (contar p) +(contar q)
 -- E7 Definir una función que dada una interpretación y una fórmula proposicional, verifique si esta interpretación es un modelo.
 --
 -- E8 Definir una función que dada una fórmula proposicional, esta devuelve la lista de todos sus modelos.
---
+modelos :: Prop -> [Estado]
+modelos f = estadosPosibles f
+
 -- E9 Definir una función que dada una fórmula proposicional, verifica si esta es válida o no.
 --
 -- E10 Definir una función que dada una fórmula proposicional, verifica si esta es insatisfacible.
