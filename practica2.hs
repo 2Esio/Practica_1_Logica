@@ -47,7 +47,7 @@ variables (Syss p q) = eliminarRepetidos(variables p ++ variables q)
 
 conjPotencia :: [a] -> [[a]]
 conjPotencia [] = [[]]
-conjPotencia (x:xs) = [(x:ys) | ys <- conjPotencia xs] ++ conjPotencia xs
+conjPotencia (x:xs) = conjPotencia xs ++ [(x:ys) | ys <- conjPotencia xs]
 
 -- E3 Definir la función interpretacion :: Prop -> Estado -> Bool tal que interpretacion f i es la interpretacion de f bajo i.
 
@@ -61,26 +61,15 @@ interpretacion (Impl f1 f2) xs = interpretacion (Not f1) xs || interpretacion f2
 interpretacion (Syss f1 f2) xs = interpretacion (Impl f1 f2) xs && interpretacion (Impl f2 f1) xs
 
 -- E4 Definir una función que dada una fórmula proposicional, la función devuelve los estados con los que podemos evaluar la fórmula.
+estadosPosibles :: Prop -> [Estado]
+estadosPosibles f = [estado | estado <- conjPotencia (variables f), interpretacion f estado]
 
-sustituir :: String -> Prop -> Prop -> Prop
-sustituir x sub (Var y) = if x == y then sub else Var y
-sustituir _ _ (Cons b) = Cons b
-sustituir x sub (Not p) = Not (sustituir x sub p)
-sustituir x sub (And p q) = And (sustituir x sub p) (sustituir x sub q)
-sustituir x sub (Or p q) = Or (sustituir x sub p) (sustituir x sub q)
-sustituir x sub (Impl p q) = Impl (sustituir x sub p) (sustituir x sub q)
-sustituir x sub (Syss p q) = Syss (sustituir x sub p) (sustituir x sub q)
-{-
-estadosPosibles :: Prop -> [[a]]
-estadosPosibles (Var v) xs = v `elem` xs 
-estadosPosibles (Cons b) _ = b
-estadosPosibles (Not f) xs = not (estadosPosibles f xs)
-estadosPosibles (And f1 f2) xs = estadosPosibles f1 xs && estadosPosibles f2 xs
-estadosPosibles (Or f1 f2) xs = estadosPosibles f1 xs || estadosPosibles f2 xs
-estadosPosibles (Impl f1 f2) xs = estadosPosibles (Not f1) xs || estadosPosibles f2 xs
-estadosPosibles (Syss f1 f2) xs = estadosPosibles (Impl f1 f2) xs && estadosPosibles (Impl f2 f1) xs
--}
+f = Or (Var "q") (And (Var "r") (Var "q"))
+{-Lo estuve probando en terminal con esto: 
+result = estadosPosibles f
+main = print result-}
 
+{- esto no sé que sea jasjdj, pero se los dejo porque estaba en el doc xD
 contar :: Prop -> Int
 contar (Var y) = 1
 contar (Cons b) = 0
@@ -89,6 +78,7 @@ contar (And p q) = (contar p) + (contar q)
 contar (Or p q) = (contar p) +(contar q)
 contar (Impl p q) = (contar p) +(contar q)
 contar (Syss p q) = (contar p) +(contar q)
+-}
 
 -- E5 Definir una función que dada una fórmula proposicional, nos diga si es una tautología.
 
