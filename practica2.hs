@@ -115,6 +115,9 @@ esInsatisfacible formula =
 
 -- E11 Definir una función que dada una fórmula proposicional, verifica si esta es satisfacible. 
 
+esSatisfacible :: Prop -> Bool
+esSatisfacible f = not(esInsatisfacible f)
+
 
 
 
