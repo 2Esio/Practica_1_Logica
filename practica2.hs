@@ -82,10 +82,19 @@ contar (Syss p q) = (contar p) +(contar q)
 
 -- E5 Definir una función que dada una fórmula proposicional, nos diga si es una tautología.
 
+tautologia :: Prop -> Bool
+tautologia f = estadosPosibles f == conjPotencia (variables f)
+
 -- E6 Definir una función que dada una fórmula proposicional, nos diga si es una contradicción.
---
+
+contradiccion :: Prop -> Bool
+contradiccion f = estadosPosibles f == []
+
 -- E7 Definir una función que dada una interpretación y una fórmula proposicional, verifique si esta interpretación es un modelo.
---
+
+esModelo :: Estado -> Prop -> Bool
+esModelo i f = interpretacion f i 
+
 -- E8 Definir una función que dada una fórmula proposicional, esta devuelve la lista de todos sus modelos.
 --
 -- E9 Definir una función que dada una fórmula proposicional, verifica si esta es válida o no.
