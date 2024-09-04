@@ -65,20 +65,6 @@ estadosPosibles :: Prop -> [Estado]
 estadosPosibles f = [estado | estado <- conjPotencia (variables f), interpretacion f estado]
 
 f = Or (Var "q") (And (Var "r") (Var "q"))
-{-Lo estuve probando en terminal con esto: 
-result = estadosPosibles f
-main = print result-}
-
-{- esto no sé que sea jasjdj, pero se los dejo porque estaba en el doc xD
-contar :: Prop -> Int
-contar (Var y) = 1
-contar (Cons b) = 0
-contar (Not p ) = (contar p)
-contar (And p q) = (contar p) + (contar q)
-contar (Or p q) = (contar p) +(contar q)
-contar (Impl p q) = (contar p) +(contar q)
-contar (Syss p q) = (contar p) +(contar q)
--}
 
 -- E5 Definir una función que dada una fórmula proposicional, nos diga si es una tautología.
 
