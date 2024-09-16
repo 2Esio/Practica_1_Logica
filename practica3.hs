@@ -15,12 +15,29 @@ instance Show Prop where
                     show (Impl p q) = "(" ++ show p ++ " → " ++ show q ++ ")"
                     show (Syss p q) = "(" ++ show p ++ " ↔ " ++ show q ++ ")"
 
+p, q, r, s, t, u :: Prop
+p = Var "p"
+q = Var "q"
+r = Var "r"
+s = Var "s"
+t = Var "t"
+u = Var "u"
+
 -- Fin de pre - código --
 
 
 -- E1.1 Implementar la funcion fnn que convierte una fórmula proproposicional en su forma normal negativa.
 
 fnn :: Prop -> Prop
+fnn (Var p) = Not (Var p)
+fnn (Cons True) = True
+fnn (Cons False) = False
+fnn (Not f) = f 
+fnn (And f1 f2) = (Or (negar f1) (negar f2))
+fnn (Or f1 f2) = (And (negar f1) (negar f2))
+fnn (Impl f1 f2) = (And f1 (negar f2))
+fnn (Syss f1 f2) = negar (And (Impl f1 f2) (Impl f2 f1))
+
 
 -- E1.2 Impementar la función fnc, que convierte una fórmula proposicional en su forma normal conjuntiva. Se recomienda usar la función fnn.
 
