@@ -33,15 +33,20 @@ fnn (Var p) = Not (Var p)
 fnn (Cons True) = True
 fnn (Cons False) = False
 fnn (Not f) = f 
-fnn (And f1 f2) = (Or (negar f1) (negar f2))
-fnn (Or f1 f2) = (And (negar f1) (negar f2))
-fnn (Impl f1 f2) = (And f1 (negar f2))
-fnn (Syss f1 f2) = negar (And (Impl f1 f2) (Impl f2 f1))
+fnn (And f1 f2) = (Or (fnn f1) (fnn f2))
+fnn (Or f1 f2) = (And (fnn f1) (fnn f2))
+fnn (Impl f1 f2) = (And f1 (fnn f2))
+fnn (Syss f1 f2) = fnn (And (Impl f1 f2) (Impl f2 f1))
 
 
 -- E1.2 Impementar la función fnc, que convierte una fórmula proposicional en su forma normal conjuntiva. Se recomienda usar la función fnn.
 
 fnc :: Prop -> Prop
+fnc p = p
+fnc (Or p (And q r)) = And (fnc (Or p q)) (fnc (Or p r))
+fnc (Or (And q r) p) = And (fnc (Or q p)) (fnc (Or r p))
+fnc (Or p q) = Or (fnc p) (fnc q)
+fnc (And p q) = And (fnc p) (fnc q)
 
 -- E2.1 Crear un sinónimo Literal, que será igual a Prop por simplicidad, aunque solo deberían ser variables o negaciones de variables. 
 
