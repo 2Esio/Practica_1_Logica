@@ -23,51 +23,62 @@ s = Var "s"
 t = Var "t"
 u = Var "u"
 
+negar :: Prop -> Prop
+negar (Var p) = Not (Var p)
+negar (Cons True) = (Cons False)
+negar (Cons False) = (Cons True)
+negar (Not f) = f
+negar (And f1 f2) = (Or (negar f1) (negar f2))
+negar (Or f1 f2) = (And (negar f1) (negar f2))
+negar (Impl f1 f2) = (And f1 (negar f2))
+negar (Syss f1 f2)= negar (And (Impl f1 f2) (Impl f2 f1)) 
+
+
+distribuir :: Prop -> Prop
+distribuir (And p q) = And (distribuir p) (distribuir q)
+distribuir (Or (And p1 p2) q) = And (distribuir (Or p1 q)) (distribuir (Or p2 q))
+distribuir (Or p (And q1 q2)) = And (distribuir (Or p q1)) (distribuir (Or p q2))
+distribuir (Or p q) = Or (distribuir p) (distribuir q)
+distribuir p = p
+
 -- Fin de pre - código --
 
 
 -- E1.1 Implementar la funcion fnn que convierte una fórmula proproposicional en su forma normal negativa.
 
 fnn :: Prop -> Prop
-fnn (Var p) = Not (Var p)
-fnn (Cons True) = True
-fnn (Cons False) = False
-fnn (Not f) = f 
-fnn (And f1 f2) = (Or (fnn f1) (fnn f2))
-fnn (Or f1 f2) = (And (fnn f1) (fnn f2))
-fnn (Impl f1 f2) = (And f1 (fnn f2))
-fnn (Syss f1 f2) = fnn (And (Impl f1 f2) (Impl f2 f1))
-
-
+fnn (Var p) = (Var p)
+fnn (Not p) = negar p  
+fnn (And p q) = And (fnn p) (fnn q)  
+fnn (Or p q) = Or (fnn p) (fnn q)  
+fnn (Impl p q) = fnn (Or (Not p) q) 
+fnn (Syss p q) = fnn (And (Impl p q) (Impl q p))  
+  
 -- E1.2 Impementar la función fnc, que convierte una fórmula proposicional en su forma normal conjuntiva. Se recomienda usar la función fnn.
 
 fnc :: Prop -> Prop
-fnc p = p
-fnc (Or p (And q r)) = And (fnc (Or p q)) (fnc (Or p r))
-fnc (Or (And q r) p) = And (fnc (Or q p)) (fnc (Or r p))
-fnc (Or p q) = Or (fnc p) (fnc q)
-fnc (And p q) = And (fnc p) (fnc q)
+fnc p = distribuir (fnn p)
 
 -- E2.1 Crear un sinónimo Literal, que será igual a Prop por simplicidad, aunque solo deberían ser variables o negaciones de variables. 
 
-type Literal = Prop
+--type Literal = Prop
 
 -- E2.2 Crear un sinónimo Clausula, que representará las claúsuas como conjunto de literales.
 
-type Clausula = [Literal]
+--type Clausula = [Literal]
 
 -- E2.3 Definir la función clausulas que dada una fórmula en FNC, devuelve una lista con cláusulas que la forman.
 
-clausulas :: Prop -> [Clausula]
+--clausulas :: Prop -> [Clausula]
 
 -- E2.4 Definir la función resolución que dadas dos cláusulas, devuelve el resolvente obtenido después de aplicar la regla de resolución binaria. Se puede asumir que se puede obtener un resolvente a partir de los argumentos.
 
-resolucion :: Clausula -> Clausula -> Clausula
+--resolucion :: Clausula -> Clausula -> Clausula
 
 -- E3.1 Definir la función hayResolvente, que determina si es posible obtener un resolvente a partir de dos cláusulas.
 
-hayResolvente :: Clausula -> Clausula -> Bool
+--hayResolvente :: Clausula -> Clausula -> Bool
 
 -- E3.2 Definir la función saturacion, que dada una fórmula proposicional, determina si esta es satisfacible o no usando el algoritmo de saturación.
 
-saturacion :: Prop -> Bool
+--saturacion :: Prop -> Bool
